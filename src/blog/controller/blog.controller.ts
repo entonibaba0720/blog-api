@@ -25,7 +25,7 @@ export class BlogController {
   }
 
   @Get()
-  findBlogEntries(@Query('userId') userId: number): Observable<BlogEntry[]> {
+  findBlogEntries(@Query('userId') userId: number,  @Query('created') sortBy: 'DESC'): Observable<BlogEntry[]> {
     if (userId == null) {
       return this.blogService.findAll();
     } else {
