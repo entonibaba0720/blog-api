@@ -13,7 +13,7 @@ import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { BlogEntry } from '../models/blog-entry.interface';
 import { Observable } from 'rxjs';
 
-@Controller('blogs')
+@Controller('posts')
 export class BlogController {
   constructor(private blogService: BlogService) {}
 

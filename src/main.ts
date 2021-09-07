@@ -14,7 +14,7 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
-
+  app.setGlobalPrefix('api');
   const config = new DocumentBuilder()
     .setTitle('Blog API')
     .setDescription('Documentation of a simple Blog API')
