@@ -12,7 +12,6 @@ import { BlogService } from '../service/blog.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { BlogEntry } from '../models/blog-entry.interface';
 import { Observable } from 'rxjs';
-import { Crud } from '@nestjsx/crud';
 
 @Controller('posts')
 export class BlogController {

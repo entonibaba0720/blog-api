@@ -9,10 +9,7 @@ export class BlogEntryEntity {
   @ManyToOne((type) => UserEntity, (user) => user.blogEntries)
   author: UserEntity;
 
-  @Column({
-    type: 'timestamp',
-    default: 'CURRENT_TIMESTAMP',
-  })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created: Date;
 
   @Column()
