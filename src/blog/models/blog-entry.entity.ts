@@ -11,7 +11,7 @@ export class BlogEntryEntity {
 
   @Column({
     type: 'timestamp',
-    default: (order: 'DESC') => 'CURRENT_TIMESTAMP',
+    default: 'CURRENT_TIMESTAMP',
   })
   created: Date;
 

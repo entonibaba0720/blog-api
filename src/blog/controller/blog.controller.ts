@@ -12,6 +12,7 @@ import { BlogService } from '../service/blog.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { BlogEntry } from '../models/blog-entry.interface';
 import { Observable } from 'rxjs';
+import { Crud } from '@nestjsx/crud';
 
 @Controller('posts')
 export class BlogController {
@@ -25,8 +26,11 @@ export class BlogController {
   }
 
   @Get()
-  findBlogEntries(@Query('userId') userId: number): Observable<BlogEntry[]> {
-    if (userId == null) {
+  findBlogEntries(
+    @Query('userId' || 'params') userId: number,
+    params: any,
+  ): Observable<BlogEntry[]> {
+    if (userId == null || params == null) {
       return this.blogService.findAll();
     } else {
       return this.blogService.findByUser(userId);
