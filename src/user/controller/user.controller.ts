@@ -31,7 +31,7 @@ export class UserController {
   login(@Body() user: User): Observable<Object> {
     return this.userService.login(user).pipe(
       map((jwt: string) => {
-        return { access_token: jwt };
+        return { jwt };
       }),
     );
   }
