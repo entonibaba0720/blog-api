@@ -19,7 +19,14 @@ export class BlogService {
   }
 
   findAll(): Observable<BlogEntry[]> {
-    return from(this.blogRepository.find({ relations: ['author'] }));
+    return from(
+      this.blogRepository.find({
+        relations: ['author'],
+        order: {
+          created: 'DESC',
+        },
+      }),
+    );
   }
 
   findByUser(userId: number): Observable<BlogEntry[]> {

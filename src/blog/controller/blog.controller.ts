@@ -6,12 +6,13 @@ import {
   Request,
   Get,
   Query,
-  Param,
-} from '@nestjs/common';
+  Param, Req
+} from "@nestjs/common";
 import { BlogService } from '../service/blog.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { BlogEntry } from '../models/blog-entry.interface';
 import { Observable } from 'rxjs';
+import { RequestQueryBuilder } from "@nestjsx/crud-request";
 
 @Controller('posts')
 export class BlogController {
@@ -25,7 +26,11 @@ export class BlogController {
   }
 
   @Get()
-  findBlogEntries(@Query('userId') userId: number,  @Query('created') sortBy: 'DESC'): Observable<BlogEntry[]> {
+  findBlogEntries(
+    @Query('userId') userId: number,
+    @Query('query') query: string,
+    @Req() request: Request,
+  ): Observable<BlogEntry[]> {
     if (userId == null) {
       return this.blogService.findAll();
     } else {
