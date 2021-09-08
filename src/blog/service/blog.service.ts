@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { BlogEntry } from '../models/blog-entry.interface';
-import { from, map, Observable } from 'rxjs';
+import { from, map, Observable, pipe } from 'rxjs';
 import { User } from '../../user/models/user.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BlogEntryEntity } from '../models/blog-entry.entity';
-import { Repository } from 'typeorm';
+import { createQueryBuilder, getRepository, Repository } from 'typeorm';
+import { RequestQueryBuilder } from '@nestjsx/crud-request';
 
 @Injectable()
 export class BlogService {
@@ -18,7 +19,7 @@ export class BlogService {
     return from(this.blogRepository.save(blogEntry));
   }
 
-  findAll(params): Observable<BlogEntry[]> {
+  findAll(): Observable<BlogEntry[]> {
     return from(
       this.blogRepository.find({
         relations: ['author'],
@@ -27,6 +28,22 @@ export class BlogService {
         },
       }),
     );
+  }
+
+  searchPosts(args: any) {
+    const { searchQuery } = args;
+    const BlogRepository = getRepository(BlogEntryEntity);
+
+    return BlogRepository.createQueryBuilder()
+      .select()
+      .where('title ILIKE :searchQuery', { searchQuery: `%${searchQuery}%` })
+      .orWhere('tag ILIKE :searchQuery', {
+        searchQuery: `%${searchQuery}%`,
+      })
+      .orWhere('body ILIKE :searchQuery', {
+        searchQuery: `%${searchQuery}%`,
+      })
+      .getMany();
   }
 
   findByUser(userId: number): Observable<BlogEntry[]> {

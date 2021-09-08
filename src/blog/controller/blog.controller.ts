@@ -26,17 +26,11 @@ export class BlogController {
   }
 
   @Get()
-  findBlogEntries(
-    @Query('userId') userId: number,
-    @Query('title') title: string,
-    @Query('tags') tags: string,
-    @Query('body') body: string,
-    @Req() request: Request,
-  ): Observable<BlogEntry[]> {
+  findBlogEntries(@Query('userId') userId: number): Observable<BlogEntry[]> {
     if (userId == null) {
-      return this.blogService.findAll(Query);
+      return this.blogService.findAll();
     } else {
-      return this.blogService.findAll(Query);
+      return this.blogService.findByUser(userId);
     }
   }
 
