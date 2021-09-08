@@ -34,9 +34,9 @@ export class BlogController {
     @Req() request: Request,
   ): Observable<BlogEntry[]> {
     if (userId == null) {
-      return this.blogService.findAll();
+      return this.blogService.findAll(Query);
     } else {
-      return this.blogService.findAll();
+      return this.blogService.findAll(Query);
     }
   }
 

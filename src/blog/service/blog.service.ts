@@ -18,7 +18,7 @@ export class BlogService {
     return from(this.blogRepository.save(blogEntry));
   }
 
-  findAll(): Observable<BlogEntry[]> {
+  findAll(params): Observable<BlogEntry[]> {
     return from(
       this.blogRepository.find({
         relations: ['author'],
