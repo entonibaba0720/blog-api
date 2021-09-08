@@ -29,7 +29,7 @@ export class BlogController {
   findBlogEntries(
     @Query('userId') userId: number,
     @Query('title') title: string,
-    @Query('tags') tags: string,
+    @Query('tags') tags: string[],
     @Query('body') body: string,
     @Req() request: Request,
   ): Observable<BlogEntry[]> {

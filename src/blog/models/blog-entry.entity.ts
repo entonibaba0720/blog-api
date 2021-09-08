@@ -15,7 +15,7 @@ export class BlogEntryEntity {
   @Column()
   title: string;
 
-  @Column({ array: true })
+  @Column('text', { array: true })
   tags: string[];
 
   @Column({ default: '' })
