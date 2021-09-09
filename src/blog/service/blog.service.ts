@@ -4,7 +4,7 @@ import { from, map, Observable } from 'rxjs';
 import { User } from '../../user/models/user.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BlogEntryEntity } from '../models/blog-entry.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 
 @Injectable()
 export class BlogService {
@@ -24,7 +24,7 @@ export class BlogService {
       findOptions.title = query.title;
     }
     if (query.tags) {
-      findOptions.tags = query.tags;
+      findOptions.tags = Like(`%${query.tags}%`);
     }
     if (query.body) {
       findOptions.body = query.body;
