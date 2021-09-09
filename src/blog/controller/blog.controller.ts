@@ -30,9 +30,9 @@ export class BlogController {
   }*/
 
   @Get()
-  findBlogEntries(@Query('userId') userId: number): Observable<BlogEntry[]> {
+  async findBlogEntries(@Query('userId') userId: number, @Query() query: searchQuery) {
     if (userId == null) {
-      return this.blogService.findAll();
+      return await this.blogService.findAll(query);
     } else {
       return this.blogService.findByUser(userId);
     }
