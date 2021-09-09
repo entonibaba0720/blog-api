@@ -7,11 +7,10 @@ import {
   Get,
   Query,
   Param,
-  Req,
 } from '@nestjs/common';
 import { BlogService } from '../service/blog.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-import { BlogEntry } from '../models/blog-entry.interface';
+import { BlogEntry, searchQuery } from '../models/blog-entry.interface';
 import { Observable } from 'rxjs';
 
 @Controller('posts')
@@ -26,18 +25,8 @@ export class BlogController {
   }
 
   @Get()
-  findAll(
-    @Query('title') title: string,
-    @Query('tags') tags: any,
-    @Query('body') body: string,
-  ) {
-    const metadata = { title, tags, body };
-    if (metadata) {
-      const listResult = this.blogService.findAll(metadata);
-      return listResult;
-    } else {
-      return this.blogService.findAll();
-    }
+  async findAll(@Query() query: searchQuery) {
+    return await this.blogService.findAll(query);
   }
 
   @Get()

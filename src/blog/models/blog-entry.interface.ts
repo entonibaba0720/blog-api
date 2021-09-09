@@ -8,3 +8,9 @@ export interface BlogEntry {
   tags?: string;
   body?: string;
 }
+
+export interface searchQuery {
+  title?: string;
+  tags?: string;
+  body?: string;
+}
