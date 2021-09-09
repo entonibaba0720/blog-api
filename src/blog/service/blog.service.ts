@@ -4,7 +4,7 @@ import { from, map, Observable } from 'rxjs';
 import { User } from '../../user/models/user.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BlogEntryEntity } from '../models/blog-entry.entity';
-import { Like, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class BlogService {
@@ -36,7 +36,12 @@ export class BlogService {
   }*/
 
   findAll(): Observable<BlogEntry[]> {
-    return from(this.blogRepository.find({ relations: ['author'] }));
+    return from(
+      this.blogRepository.find({
+        relations: ['author'],
+        order: { created: 'DESC' },
+      }),
+    );
   }
 
   findByUser(userId: number): Observable<BlogEntry[]> {
@@ -44,6 +49,7 @@ export class BlogService {
       this.blogRepository.find({
         where: { author: userId },
         relations: ['author'],
+        order: { created: 'DESC' },
       }),
     ).pipe(map((blogEntries: BlogEntry[]) => blogEntries));
   }
