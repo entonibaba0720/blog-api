@@ -17,7 +17,7 @@ export class BlogService {
     blogEntry.author = user;
     return from(this.blogRepository.save(blogEntry));
   }
-
+/*
   async findAll(query: searchQuery) {
     const findOptions: any = { where: {}, order: { created: 'DESC' } };
     if (query.title) {
@@ -30,6 +30,10 @@ export class BlogService {
       findOptions.body = query.body;
     }
     return await this.blogRepository.find(findOptions);
+  }*/
+
+  findAll(): Observable<BlogEntry[]> {
+    return from(this.blogRepository.find({ relations: ['author'] }));
   }
 
   findByUser(userId: number): Observable<BlogEntry[]> {

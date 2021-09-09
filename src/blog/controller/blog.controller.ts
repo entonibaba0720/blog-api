@@ -24,14 +24,18 @@ export class BlogController {
     return this.blogService.create(user, blogEntry);
   }
 
-  @Get()
+ /* @Get()
   async findAll(@Query() query: searchQuery) {
     return await this.blogService.findAll(query);
-  }
+  }*/
 
   @Get()
   findBlogEntries(@Query('userId') userId: number): Observable<BlogEntry[]> {
-    return this.blogService.findByUser(userId);
+    if (userId == null) {
+      return this.blogService.findAll();
+    } else {
+      return this.blogService.findByUser(userId);
+    }
   }
 
   @Get(':id')
